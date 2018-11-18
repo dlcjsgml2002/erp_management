@@ -7,7 +7,7 @@ public class Employee {
 	private String empName;
 	private Title titleName;
 	private int salary;
-	private String gender;
+	private Gender gender;
 	private Department deptName;
 	private Date date;
 
@@ -15,7 +15,7 @@ public class Employee {
 		
 	}
 
-	public Employee(String empNo, String empName, Title titleName, int salary, String gender, Department deptName,
+	public Employee(String empNo, String empName, Title titleName, int salary, Gender gender, Department deptName,
 			Date date) {
 		this.empNo = empNo;
 		this.empName = empName;
@@ -58,11 +58,11 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 

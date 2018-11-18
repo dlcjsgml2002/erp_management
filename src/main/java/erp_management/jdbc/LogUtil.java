@@ -9,15 +9,15 @@ import org.apache.logging.log4j.Logger;
 public class LogUtil {
 	static final Logger LOG = LogManager.getLogger();
 
-	public static void PrnLog(PreparedStatement pstmt) {
+	public static void prnLog(PreparedStatement pstmt) {
 		LOG.trace(pstmt.toString().substring(pstmt.toString().lastIndexOf(": ") + 2));
 	}
 
-	public static void PrnLog(String message) {
+	public static void prnLog(String message) {
 		LOG.trace(String.format("%s", message));
 	}
 
-	public static void PrnLog(SQLException e) {
+	public static void prnLog(SQLException e) {
 		LOG.trace(String.format("errorCode %s errorMessage %s", e.getErrorCode(), e.getMessage()));
 	}
 }
