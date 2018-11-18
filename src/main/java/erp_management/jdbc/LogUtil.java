@@ -1,0 +1,23 @@
+package erp_management.jdbc;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class LogUtil {
+	static final Logger LOG = LogManager.getLogger();
+
+	public static void PrnLog(PreparedStatement pstmt) {
+		LOG.trace(pstmt.toString().substring(pstmt.toString().lastIndexOf(": ") + 2));
+	}
+
+	public static void PrnLog(String message) {
+		LOG.trace(String.format("%s", message));
+	}
+
+	public static void PrnLog(SQLException e) {
+		LOG.trace(String.format("errorCode %s errorMessage %s", e.getErrorCode(), e.getMessage()));
+	}
+}
