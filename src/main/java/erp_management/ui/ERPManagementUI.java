@@ -16,7 +16,7 @@ public class ERPManagementUI extends JFrame {
 	public ERPManagementUI() {
 		setTitle("ERP 관리 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 100);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

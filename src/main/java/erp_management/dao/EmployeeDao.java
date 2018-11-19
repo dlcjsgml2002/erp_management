@@ -6,13 +6,13 @@ import java.util.List;
 import erp_management.dto.Employee;
 
 public interface EmployeeDao {
-	List<Employee> selectDepartmentByAll();
+	List<Employee> selectEmployeeByAll();
 
-	int insertDepartment(Employee emp) throws SQLException;
+	int insertEmployee(Employee emp) throws SQLException;
 
-	int deleteDepartment(Employee emp) throws SQLException;
+	int deleteEmployee(Employee emp) throws SQLException;
 
-	int updateDepartment(Employee emp) throws SQLException;
+	int updateEmployee(Employee emp) throws SQLException;
 
-	Employee selectDepartmentByNo(Employee emp) throws SQLException;
+	Employee selectEmployeeByNo(Employee emp) throws SQLException;
 }
