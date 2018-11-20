@@ -18,7 +18,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		LogUtil.prnLog("selectEmployeeByAll()");
 		String sql = "select empno, empname, emptitle, salary, gender, empdept, joindate from employee";
 		List<Employee> list = new ArrayList<>();
-		
+
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -27,7 +27,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				}
 			}
 		}
-		
+
 		return list;
 	}
 
@@ -38,15 +38,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int insertEmployee(Employee emp) throws SQLException {
 		LogUtil.prnLog("insertEmployee()");
-		String sql = "insert into employee values(?, ?, ?, ?, ?, ?)";
+		String sql = "insert into employee values(?, ?, ?, ?, ?, ?, ?)";
+
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, emp.getEmpNo());
 			pstmt.setString(2, emp.getEmpName());
-			pstmt.setString(3, emp.getTitle());
-			pstmt.setInt(4, emp.getManager().getEmpNo());
-			pstmt.setInt(5, emp.getSalary());
-			pstmt.setInt(6, emp.getDept().getDeptNo());
+			pstmt.setString(3, emp.getTitleName().getTitleName());
+			pstmt.setInt(4, emp.getSalary());
+			pstmt.setInt(5, emp.getGender().ordinal());
+			pstmt.setString(6, emp.getDeptName().getDeptName());
+			pstmt.setDate(7, emp.getDate());
 			LogUtil.prnLog(pstmt);
+
 			return pstmt.executeUpdate();
 		}
 	}
@@ -55,9 +58,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int deleteEmployee(Employee emp) throws SQLException {
 		LogUtil.prnLog("deleteEmployee()");
 		String sql = "delete from employee where empno = ?";
+
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setInt(1, emp.getEmpNo());
+			pstmt.setString(1, emp.getEmpNo());
 			LogUtil.prnLog(pstmt);
+
 			return pstmt.executeUpdate();
 		}
 	}
@@ -65,15 +70,19 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int updateEmployee(Employee emp) throws SQLException {
 		LogUtil.prnLog("updateEmployee()");
-		String sql = "update employee set empname=?, title=?, manager=?, salary=?, dno=? where empno=?";
+		String sql = "update employee set empno = ?, empname = ?, emptitle = ?, salary = ?, gender = ?, empdept = ?, joindate = ? where empno = ?";
+
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, emp.getEmpName());
-			pstmt.setString(2, emp.getTitle());
-			pstmt.setInt(3, emp.getManager().getEmpNo());
+			pstmt.setString(1, emp.getEmpNo());
+			pstmt.setString(2, emp.getEmpName());
+			pstmt.setString(3, emp.getTitleName().getTitleName());
 			pstmt.setInt(4, emp.getSalary());
-			pstmt.setInt(5, emp.getDept().getDeptNo());
-			pstmt.setInt(6, emp.getEmpNo());
+			pstmt.setInt(5, emp.getGender().ordinal());
+			pstmt.setString(6, emp.getDeptName().getDeptName());
+			pstmt.setDate(7, emp.getDate());
 			LogUtil.prnLog(pstmt);
+			LogUtil.prnLog(pstmt);
+
 			return pstmt.executeUpdate();
 		}
 	}
@@ -83,8 +92,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		LogUtil.prnLog("selectEmployeeByNo()");
 		String sql = "select empno, empname, title, manager, salary, dno from employee where empno = ?";
 		Employee employee = null;
+
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setInt(1, emp.getEmpNo());
+			pstmt.setString(1, emp.getEmpNo());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
@@ -92,6 +102,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				}
 			}
 		}
+
 		return employee;
 	}
 
