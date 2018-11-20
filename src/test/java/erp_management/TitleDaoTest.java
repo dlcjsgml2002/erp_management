@@ -11,6 +11,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import erp_management.dao.TitleDao;
+import erp_management.dao.TitleDaoImpl;
+import erp_management.dto.Title;
 import erp_management.jdbc.LogUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -37,17 +40,17 @@ public class TitleDaoTest {
 	}
 
 	@Test
-	public void test01SelectDepartmentByAll() {
-		List<Title> lists = dao.selectDepartmentByAll();
+	public void test01SelectTitleByAll() {
+		List<Title> lists = dao.selectTitleByAll();
 		LogUtil.prnLog(lists.toString());
 		Assert.assertNotNull(lists);
 	}
 
 	@Test
-	public void test02InsertDepartment() {
+	public void test02InsertTitle() {
 		try {
-			Title newDept = new Title("D005", "경영", 4);
-			int rowAffected = dao.insertDepartment(newDept);
+			Title newTitle = new Title("T006", "인턴");
+			int rowAffected = dao.insertTitle(newTitle);
 			LogUtil.prnLog(String.format("rowAffected %d", rowAffected));
 			Assert.assertEquals(1, rowAffected);
 		} catch (SQLException e) {
@@ -60,11 +63,11 @@ public class TitleDaoTest {
 	}
 
 	@Test
-	public void test04DeleteDepartment() {
+	public void test04DeleteTitle() {
 		try {
-			Title delDept = new Department();
-			delDept.setDeptNo("D005");
-			int rowAffected = dao.deleteDepartment(delDept);
+			Title delTitle = new Title();
+			delTitle.setTitleNo("T006");
+			int rowAffected = dao.deleteTitle(delTitle);
 			LogUtil.prnLog(String.format("rowAffected %d", rowAffected));
 			Assert.assertEquals(1, rowAffected);
 		} catch (SQLException e) {
@@ -77,10 +80,10 @@ public class TitleDaoTest {
 	}
 
 	@Test
-	public void test03UpdateDepartment() {
+	public void test03UpdateTitle() {
 		try {
-			Department updateDept = new Department("D005", "경영", 4);
-			int rowAffected = dao.updateDepartment(updateDept);
+			Title updateTitle = new Title("T006", "노예");
+			int rowAffected = dao.updateTitle(updateTitle);
 			LogUtil.prnLog(String.format("rowAffected %d", rowAffected));
 			Assert.assertEquals(1, rowAffected);
 		} catch (SQLException e) {
@@ -89,13 +92,13 @@ public class TitleDaoTest {
 	}
 
 	@Test
-	public void test05SelectDepartmentByNo() {
+	public void test05SelectTitleByNo() {
 		try {
-			Department selDept = new Department();
-			selDept.setDeptNo("D005");
-			Department department = dao.selectDepartmentByNo(selDept);
-			LogUtil.prnLog(String.format("%s - %s", department.getClass().getSimpleName(), department));
-			Assert.assertNotNull(department);
+			Title selTitle = new Title();
+			selTitle.setTitleNo("T006");
+			Title title = dao.selectTitleByNo(selTitle);
+			LogUtil.prnLog(String.format("%s - %s", title.getClass().getSimpleName(), title));
+			Assert.assertNotNull(title);
 		} catch (SQLException e) {
 			LogUtil.prnLog(e);
 		}

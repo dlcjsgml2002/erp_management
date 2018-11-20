@@ -6,7 +6,7 @@ import java.util.List;
 import erp_management.dto.Employee;
 
 public interface EmployeeDao {
-	List<Employee> selectEmployeeByAll();
+	List<Employee> selectEmployeeByAll() throws SQLException;
 
 	int insertEmployee(Employee emp) throws SQLException;
 
