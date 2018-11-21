@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class ERPManagementUI extends JFrame implements ActionListener {
@@ -45,7 +46,11 @@ public class ERPManagementUI extends JFrame implements ActionListener {
 			do_btnTitle_actionPerformed(e);
 		}
 		if (e.getSource() == btnDept) {
-			do_btnDept_actionPerformed(e);
+			try {
+				do_btnDept_actionPerformed(e);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		if (e.getSource() == btnEmp) {
 			do_btnEmp_actionPerformed(e);
@@ -54,10 +59,12 @@ public class ERPManagementUI extends JFrame implements ActionListener {
 	protected void do_btnEmp_actionPerformed(ActionEvent e) {
 		
 	}
-	protected void do_btnDept_actionPerformed(ActionEvent e) {
+	protected void do_btnDept_actionPerformed(ActionEvent e) throws SQLException {
 		DepartmentManagementUI departmentManagementUI = new DepartmentManagementUI();
 		departmentManagementUI.setVisible(true);
 	}
 	protected void do_btnTitle_actionPerformed(ActionEvent e) {
+		TitleManagementUI titleManagementUI = new TitleManagementUI();
+		titleManagementUI.setVisible(true);
 	}
 }

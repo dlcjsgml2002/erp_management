@@ -29,11 +29,10 @@ public class TitleListPanel extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
-		loadDatas();
 		scrollPane.setViewportView(table);
 	}
 
-	private void loadDatas() {
+	public void loadDatas() {
 		table.setModel(new DefaultTableModel(getDatas(), getColumnNames()));
 	}
 

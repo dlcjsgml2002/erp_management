@@ -4,76 +4,76 @@ DROP SCHEMA IF EXISTS mysql_erp;
 -- mysql_erp
 CREATE SCHEMA mysql_erp;
 
--- department
+-- 부서
 CREATE TABLE mysql_erp.department (
-	deptno   VARCHAR(10) NOT NULL COMMENT 'deptno', -- deptno
-	deptname VARCHAR(10) NULL     COMMENT 'deptname', -- deptname
-	floor    INT(1)      NULL     COMMENT 'floor' -- floor
+	deptno   VARCHAR(10) NOT NULL COMMENT '번호', -- 번호
+	deptname VARCHAR(10) NULL     COMMENT '부서명', -- 부서명
+	floor    INT(1)      NULL     COMMENT '층수' -- 층수
 )
-COMMENT 'department';
+COMMENT '부서';
 
--- department
+-- 부서
 ALTER TABLE mysql_erp.department
 	ADD CONSTRAINT
 		PRIMARY KEY (
-			deptno -- deptno
+			deptno -- 번호
 		);
 
--- employee
+-- 사원
 CREATE TABLE mysql_erp.employee (
-	empno    VARCHAR(10) NOT NULL COMMENT 'empno', -- empno
-	empname  VARCHAR(10) NULL     COMMENT 'empname', -- empname
-	emptitle VARCHAR(10) NULL     COMMENT 'emptitle', -- emptitle
-	salary   INT(20)     NULL     COMMENT 'salary', -- salary
-	gender   VARCHAR(5)  NULL     COMMENT 'gender', -- gender
-	empdept  VARCHAR(10) NULL     COMMENT 'empdept', -- empdept
-	joindate DATE        NULL     COMMENT 'joindate' -- joindate
+	empno    VARCHAR(10) NOT NULL COMMENT '번호', -- 번호
+	empname  VARCHAR(10) NULL     COMMENT '사원명', -- 사원명
+	emptitle VARCHAR(10) NULL     COMMENT '직책', -- 직책
+	salary   INT(20)     NULL     COMMENT '급여', -- 급여
+	gender   VARCHAR(5)  NULL     COMMENT '성별', -- 성별
+	empdept  VARCHAR(10) NULL     COMMENT '부서', -- 부서
+	joindate DATE        NULL     COMMENT '입사일' -- 입사일
 )
-COMMENT 'employee';
+COMMENT '사원';
 
--- employee
+-- 사원
 ALTER TABLE mysql_erp.employee
 	ADD CONSTRAINT
 		PRIMARY KEY (
-			empno -- empno
+			empno -- 번호
 		);
 
--- title
+-- 직책
 CREATE TABLE mysql_erp.title (
-	titleno   VARCHAR(10) NOT NULL COMMENT 'titleno', -- titleno
-	titlename VARCHAR(10) NULL     COMMENT 'titlename' -- titlename
+	titleno   VARCHAR(10) NOT NULL COMMENT '번호', -- 번호
+	titlename VARCHAR(10) NULL     COMMENT '직책명' -- 직책명
 )
-COMMENT 'title';
+COMMENT '직책';
 
--- title
+-- 직책
 ALTER TABLE mysql_erp.title
 	ADD CONSTRAINT
 		PRIMARY KEY (
-			titleno -- titleno
+			titleno -- 번호
 		);
 
--- employee
+-- 사원
 ALTER TABLE mysql_erp.employee
 	ADD CONSTRAINT employee_ibfk_1 -- employee_ibfk_1
 		FOREIGN KEY (
-			emptitle -- emptitle
+			emptitle -- 직책
 		)
-		REFERENCES mysql_erp.title ( -- title
-			titleno -- titleno
+		REFERENCES mysql_erp.title ( -- 직책
+			titleno -- 번호
 		),
 	ADD INDEX emptitle (
-		emptitle -- emptitle
+		emptitle -- 직책
 	);
 
--- employee
+-- 사원
 ALTER TABLE mysql_erp.employee
 	ADD CONSTRAINT employee_ibfk_2 -- employee_ibfk_2
 		FOREIGN KEY (
-			empdept -- empdept
+			empdept -- 부서
 		)
-		REFERENCES mysql_erp.department ( -- department
-			deptno -- deptno
+		REFERENCES mysql_erp.department ( -- 부서
+			deptno -- 번호
 		),
 	ADD INDEX empdept (
-		empdept -- empdept
+		empdept -- 부서
 	);

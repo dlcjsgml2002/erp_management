@@ -43,10 +43,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, emp.getEmpNo());
 			pstmt.setString(2, emp.getEmpName());
-			pstmt.setString(3, emp.getTitleName().getTitleName());
+			pstmt.setString(3, emp.getTitle().getTitleNo());
 			pstmt.setInt(4, emp.getSalary());
-			pstmt.setInt(5, emp.getGender().ordinal());
-			pstmt.setString(6, emp.getDeptName().getDeptName());
+			pstmt.setString(5, emp.getGender());
+			pstmt.setString(6, emp.getDepartment().getDeptNo());
 			pstmt.setDate(7, emp.getDate());
 			LogUtil.prnLog(pstmt);
 
@@ -70,17 +70,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int updateEmployee(Employee emp) throws SQLException {
 		LogUtil.prnLog("updateEmployee()");
-		String sql = "update employee set empno = ?, empname = ?, emptitle = ?, salary = ?, gender = ?, empdept = ?, joindate = ? where empno = ?";
+		String sql = "update employee set empname = ?, emptitle = ?, salary = ?, gender = ?, empdept = ?, joindate = ? where empno = ?";
 
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, emp.getEmpNo());
-			pstmt.setString(2, emp.getEmpName());
-			pstmt.setString(3, emp.getTitleName().getTitleName());
-			pstmt.setInt(4, emp.getSalary());
-			pstmt.setInt(5, emp.getGender().ordinal());
-			pstmt.setString(6, emp.getDeptName().getDeptName());
-			pstmt.setDate(7, emp.getDate());
-			LogUtil.prnLog(pstmt);
+			pstmt.setString(7, emp.getEmpNo());
+			pstmt.setString(1, emp.getEmpName());
+			pstmt.setString(2, emp.getTitle().getTitleNo());
+			pstmt.setInt(3, emp.getSalary());
+			pstmt.setString(4, emp.getGender());
+			pstmt.setString(5, emp.getDepartment().getDeptNo());
+			pstmt.setDate(6, emp.getDate());
 			LogUtil.prnLog(pstmt);
 
 			return pstmt.executeUpdate();
@@ -90,7 +89,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public Employee selectEmployeeByNo(Employee emp) throws SQLException {
 		LogUtil.prnLog("selectEmployeeByNo()");
-		String sql = "select empno, empname, title, manager, salary, dno from employee where empno = ?";
+		String sql = "select empno, empname, emptitle, salary, gender, empdept, joindate from employee where empno = ?";
 		Employee employee = null;
 
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -13,6 +13,10 @@ public class Title {
 		this.titleName = titleName;
 	}
 
+	public Title(String titleNo) {
+		this.titleNo = titleNo;
+	}
+
 	public String getTitleNo() {
 		return titleNo;
 	}

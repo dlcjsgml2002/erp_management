@@ -1,14 +1,16 @@
 package erp_management.ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import erp_management.dao.TitleDao;
+import erp_management.dao.TitleDaoImpl;
+
 import java.awt.GridLayout;
 import javax.swing.JTable;
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -18,52 +20,56 @@ public class TitleManagementUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField tfTitleNo;
+	private JTextField tfTitleName;
+	private TitleListPanel titleListPanel;
+	private TitleDao titleDao;
 
 	public TitleManagementUI() {
+		titleDao = new TitleDaoImpl();
 		initComponents();
 	}
+
 	private void initComponents() {
 		setTitle("직책 관리");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 618);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(0, 2, 10, 10));
-		
-		JLabel lblNewLabel = new JLabel("번호");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblNewLabel);
-		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("직책명");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblNewLabel_1);
-		
-		textField_1 = new JTextField();
-		panel.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JButton btnNewButton = new JButton("추가");
-		panel.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("취소");
-		panel.add(btnNewButton_1);
-		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.SOUTH);
-		
-		table = new JTable();
-		panel_1.add(table);
+
+		JLabel lblTitleNo = new JLabel("번호");
+		lblTitleNo.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(lblTitleNo);
+
+		tfTitleNo = new JTextField();
+		panel.add(tfTitleNo);
+		tfTitleNo.setColumns(10);
+
+		JLabel lblTitleName = new JLabel("직책명");
+		lblTitleName.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(lblTitleName);
+
+		tfTitleName = new JTextField();
+		panel.add(tfTitleName);
+		tfTitleName.setColumns(10);
+
+		JButton btnOk = new JButton("추가");
+		panel.add(btnOk);
+
+		JButton btnCancel = new JButton("취소");
+		panel.add(btnCancel);
+
+		titleListPanel = new TitleListPanel();
+		titleListPanel.setList(titleDao.selectTitleByAll());
+		titleListPanel.loadDatas();
+
+		contentPane.add(titleListPanel, BorderLayout.SOUTH);
 	}
 
 }

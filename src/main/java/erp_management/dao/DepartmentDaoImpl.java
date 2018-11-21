@@ -15,6 +15,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 	@Override
 	public List<Department> selectDepartmentByAll() throws SQLException {
+		LogUtil.prnLog("selectDepartmentByAll()");
 		List<Department> list = new ArrayList<>();
 		String sql = "select deptno, deptname, floor from department";
 

@@ -5,25 +5,29 @@ import java.sql.Date;
 public class Employee {
 	private String empNo;
 	private String empName;
-	private Title titleName;
+	private Title title;
 	private int salary;
-	private Gender gender;
-	private Department deptName;
+	private String gender;
+	private Department department;
 	private Date date;
 
 	public Employee() {
-		
+
 	}
 
-	public Employee(String empNo, String empName, Title titleName, int salary, Gender gender, Department deptName,
+	public Employee(String empNo, String empName, Title title, int salary, String gender, Department department,
 			Date date) {
 		this.empNo = empNo;
 		this.empName = empName;
-		this.titleName = titleName;
+		this.title = title;
 		this.salary = salary;
 		this.gender = gender;
-		this.deptName = deptName;
+		this.department = department;
 		this.date = date;
+	}
+
+	public Employee(String empNo) {
+		this.empNo = empNo;
 	}
 
 	public String getEmpNo() {
@@ -42,12 +46,12 @@ public class Employee {
 		this.empName = empName;
 	}
 
-	public Title getTitleName() {
-		return titleName;
+	public Title getTitle() {
+		return title;
 	}
 
-	public void setTitleName(Title titleName) {
-		this.titleName = titleName;
+	public void setTitle(Title title) {
+		this.title = title;
 	}
 
 	public int getSalary() {
@@ -58,20 +62,20 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public Department getDeptName() {
-		return deptName;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setDeptName(Department deptName) {
-		this.deptName = deptName;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 	public Date getDate() {
@@ -86,6 +90,6 @@ public class Employee {
 	public String toString() {
 		return String.format(
 				"Employee [empNo=%s, empName=%s, titleName=%s, salary=%s, gender=%s, deptName=%s, date=%s]", empNo,
-				empName, titleName, salary, gender, deptName, date);
+				empName, title, salary, gender, department, date);
 	}
 }

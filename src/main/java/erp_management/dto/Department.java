@@ -6,13 +6,17 @@ public class Department {
 	private int floor;
 
 	public Department() {
-		
+
 	}
 
 	public Department(String deptNo, String deptName, int floor) {
 		this.deptNo = deptNo;
 		this.deptName = deptName;
 		this.floor = floor;
+	}
+
+	public Department(String deptNo) {
+		this.deptNo = deptNo;
 	}
 
 	public String getDeptNo() {
