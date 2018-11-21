@@ -40,7 +40,7 @@ public class DepartmentDaoTest {
 	}
 
 	@Test
-	public void test01SelectDepartmentByAll() {
+	public void test01SelectDepartmentByAll() throws SQLException {
 		List<Department> lists = dao.selectDepartmentByAll();
 		LogUtil.prnLog(lists.toString());
 		Assert.assertNotNull(lists);
@@ -49,7 +49,7 @@ public class DepartmentDaoTest {
 	@Test
 	public void test02InsertDepartment() {
 		try {
-			Department newDept = new Department("D005", "경영", 4);
+			Department newDept = new Department("D006", "경영", 4);
 			int rowAffected = dao.insertDepartment(newDept);
 			LogUtil.prnLog(String.format("rowAffected %d", rowAffected));
 			Assert.assertEquals(1, rowAffected);
@@ -63,10 +63,10 @@ public class DepartmentDaoTest {
 	}
 
 	@Test
-	public void test04DeleteDepartment() {
+	public void test05DeleteDepartment() {
 		try {
 			Department delDept = new Department();
-			delDept.setDeptNo("D005");
+			delDept.setDeptNo("D006");
 			int rowAffected = dao.deleteDepartment(delDept);
 			LogUtil.prnLog(String.format("rowAffected %d", rowAffected));
 			Assert.assertEquals(1, rowAffected);
@@ -82,7 +82,7 @@ public class DepartmentDaoTest {
 	@Test
 	public void test03UpdateDepartment() {
 		try {
-			Department updateDept = new Department("D005", "경영", 4);
+			Department updateDept = new Department("D006", "탈세", 4);
 			int rowAffected = dao.updateDepartment(updateDept);
 			LogUtil.prnLog(String.format("rowAffected %d", rowAffected));
 			Assert.assertEquals(1, rowAffected);
@@ -92,10 +92,10 @@ public class DepartmentDaoTest {
 	}
 
 	@Test
-	public void test05SelectDepartmentByNo() {
+	public void test04SelectDepartmentByNo() {
 		try {
 			Department selDept = new Department();
-			selDept.setDeptNo("D005");
+			selDept.setDeptNo("D006");
 			Department department = dao.selectDepartmentByNo(selDept);
 			LogUtil.prnLog(String.format("%s - %s", department.getClass().getSimpleName(), department));
 			Assert.assertNotNull(department);

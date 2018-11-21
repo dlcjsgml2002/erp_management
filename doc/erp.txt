@@ -1,0 +1,79 @@
+-- mysql_erp
+DROP SCHEMA IF EXISTS mysql_erp;
+
+-- mysql_erp
+CREATE SCHEMA mysql_erp;
+
+-- department
+CREATE TABLE mysql_erp.department (
+	deptno   VARCHAR(10) NOT NULL COMMENT 'deptno', -- deptno
+	deptname VARCHAR(10) NULL     COMMENT 'deptname', -- deptname
+	floor    INT(1)      NULL     COMMENT 'floor' -- floor
+)
+COMMENT 'department';
+
+-- department
+ALTER TABLE mysql_erp.department
+	ADD CONSTRAINT
+		PRIMARY KEY (
+			deptno -- deptno
+		);
+
+-- employee
+CREATE TABLE mysql_erp.employee (
+	empno    VARCHAR(10) NOT NULL COMMENT 'empno', -- empno
+	empname  VARCHAR(10) NULL     COMMENT 'empname', -- empname
+	emptitle VARCHAR(10) NULL     COMMENT 'emptitle', -- emptitle
+	salary   INT(20)     NULL     COMMENT 'salary', -- salary
+	gender   VARCHAR(5)  NULL     COMMENT 'gender', -- gender
+	empdept  VARCHAR(10) NULL     COMMENT 'empdept', -- empdept
+	joindate DATE        NULL     COMMENT 'joindate' -- joindate
+)
+COMMENT 'employee';
+
+-- employee
+ALTER TABLE mysql_erp.employee
+	ADD CONSTRAINT
+		PRIMARY KEY (
+			empno -- empno
+		);
+
+-- title
+CREATE TABLE mysql_erp.title (
+	titleno   VARCHAR(10) NOT NULL COMMENT 'titleno', -- titleno
+	titlename VARCHAR(10) NULL     COMMENT 'titlename' -- titlename
+)
+COMMENT 'title';
+
+-- title
+ALTER TABLE mysql_erp.title
+	ADD CONSTRAINT
+		PRIMARY KEY (
+			titleno -- titleno
+		);
+
+-- employee
+ALTER TABLE mysql_erp.employee
+	ADD CONSTRAINT employee_ibfk_1 -- employee_ibfk_1
+		FOREIGN KEY (
+			emptitle -- emptitle
+		)
+		REFERENCES mysql_erp.title ( -- title
+			titleno -- titleno
+		),
+	ADD INDEX emptitle (
+		emptitle -- emptitle
+	);
+
+-- employee
+ALTER TABLE mysql_erp.employee
+	ADD CONSTRAINT employee_ibfk_2 -- employee_ibfk_2
+		FOREIGN KEY (
+			empdept -- empdept
+		)
+		REFERENCES mysql_erp.department ( -- department
+			deptno -- deptno
+		),
+	ADD INDEX empdept (
+		empdept -- empdept
+	);

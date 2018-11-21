@@ -6,10 +6,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class EmployeePanel extends JPanel {
+public class EmployeeListPanel extends JPanel {
 	private JTable table;
 
-	public EmployeePanel() {
+	public EmployeeListPanel() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();

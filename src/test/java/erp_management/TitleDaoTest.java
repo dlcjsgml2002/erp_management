@@ -63,7 +63,7 @@ public class TitleDaoTest {
 	}
 
 	@Test
-	public void test04DeleteTitle() {
+	public void test05DeleteTitle() {
 		try {
 			Title delTitle = new Title();
 			delTitle.setTitleNo("T006");
@@ -92,7 +92,7 @@ public class TitleDaoTest {
 	}
 
 	@Test
-	public void test05SelectTitleByNo() {
+	public void test04SelectTitleByNo() {
 		try {
 			Title selTitle = new Title();
 			selTitle.setTitleNo("T006");

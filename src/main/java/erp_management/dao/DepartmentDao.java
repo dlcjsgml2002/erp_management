@@ -6,7 +6,7 @@ import java.util.List;
 import erp_management.dto.Department;
 
 public interface DepartmentDao {
-	List<Department> selectDepartmentByAll();
+	List<Department> selectDepartmentByAll() throws SQLException;
 
 	int insertDepartment(Department department) throws SQLException;
 

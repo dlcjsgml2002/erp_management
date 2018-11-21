@@ -14,19 +14,17 @@ import erp_management.jdbc.MySQLJdbcUtil;
 public class DepartmentDaoImpl implements DepartmentDao {
 
 	@Override
-	public List<Department> selectDepartmentByAll() {
+	public List<Department> selectDepartmentByAll() throws SQLException {
 		List<Department> list = new ArrayList<>();
 		String sql = "select deptno, deptname, floor from department";
 
-		try (Connection conn = MySQLJdbcUtil.getConnection();
+		try(Connection conn = MySQLJdbcUtil.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
+				ResultSet rs = pstmt.executeQuery()){
 			LogUtil.prnLog(pstmt);
-			while (rs.next()) {
+			while(rs.next()) {
 				list.add(getDepartment(rs));
 			}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
 		}
 
 		return list;
@@ -98,6 +96,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, department.getDeptNo());
 			LogUtil.prnLog(pstmt);
+			
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					dept = getDepartment(rs);

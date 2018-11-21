@@ -1,24 +1,24 @@
 package erp_management.ui;
 
-import java.awt.BorderLayout;
-import java.util.List;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import erp_management.dto.Title;
+import erp_management.dto.Department;
 
-public class TitlePanel extends JPanel {
+import java.awt.BorderLayout;
+import java.util.List;
+
+public class DepartmentListPanel extends JPanel {
 	private JTable table;
-	private List<Title> list;
+	private List<Department> list;
 
-	public void setList(List<Title> list) {
+	public void setLists(List<Department> list) {
 		this.list = list;
 	}
 
-	public TitlePanel() {
+	public DepartmentListPanel() {
 		initComponents();
 	}
 
@@ -29,11 +29,10 @@ public class TitlePanel extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
-		loadDatas();
 		scrollPane.setViewportView(table);
 	}
 
-	private void loadDatas() {
+	public void loadDatas() {
 		table.setModel(new DefaultTableModel(getDatas(), getColumnNames()));
 	}
 
@@ -41,18 +40,18 @@ public class TitlePanel extends JPanel {
 		Object[][] datas = new Object[list.size()][];
 
 		for (int i = 0; i < list.size(); i++) {
-			datas[i] = getTitleRow(list.get(i));
+			datas[i] = getDepartmentRow(list.get(i));
 		}
 
 		return datas;
 	}
 
-	private Object[] getTitleRow(Title title) {
-		return new Object[] { title.getTitleNo(), title.getTitleName() };
+	private Object[] getDepartmentRow(Department department) {
+		return new Object[] { department.getDeptNo(), department.getDeptName(), department.getFloor() };
 	}
 
 	private String[] getColumnNames() {
-		return new String[] { "번호", "직책" };
+		return new String[] { "번호", "부서명", "위치" };
 	}
 
 }

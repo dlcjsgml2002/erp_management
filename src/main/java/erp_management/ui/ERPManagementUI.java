@@ -8,10 +8,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class ERPManagementUI extends JFrame {
+public class ERPManagementUI extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
+	private JButton btnEmp;
+	private JButton btnDept;
+	private JButton btnTitle;
 
 	public ERPManagementUI() {
 		setTitle("ERP 관리 프로그램");
@@ -22,14 +27,37 @@ public class ERPManagementUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 3, 10, 10));
 		
-		JButton btnNewButton = new JButton("사원 관리");
-		contentPane.add(btnNewButton);
+		btnEmp = new JButton("사원 관리");
+		btnEmp.addActionListener(this);
+		contentPane.add(btnEmp);
 		
-		JButton btnNewButton_1 = new JButton("부서 관리");
-		contentPane.add(btnNewButton_1);
+		btnDept = new JButton("부서 관리");
+		btnDept.addActionListener(this);
+		contentPane.add(btnDept);
 		
-		JButton btnNewButton_2 = new JButton("직책 관리");
-		contentPane.add(btnNewButton_2);
+		btnTitle = new JButton("직책 관리");
+		btnTitle.addActionListener(this);
+		contentPane.add(btnTitle);
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnTitle) {
+			do_btnTitle_actionPerformed(e);
+		}
+		if (e.getSource() == btnDept) {
+			do_btnDept_actionPerformed(e);
+		}
+		if (e.getSource() == btnEmp) {
+			do_btnEmp_actionPerformed(e);
+		}
+	}
+	protected void do_btnEmp_actionPerformed(ActionEvent e) {
+		
+	}
+	protected void do_btnDept_actionPerformed(ActionEvent e) {
+		DepartmentManagementUI departmentManagementUI = new DepartmentManagementUI();
+		departmentManagementUI.setVisible(true);
+	}
+	protected void do_btnTitle_actionPerformed(ActionEvent e) {
+	}
 }
