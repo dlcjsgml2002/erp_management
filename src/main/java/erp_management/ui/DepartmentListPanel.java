@@ -1,18 +1,22 @@
 package erp_management.ui;
 
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import erp_management.dto.Department;
 
 import java.awt.BorderLayout;
+import java.awt.ScrollPane;
 import java.util.List;
 
 public class DepartmentListPanel extends JPanel {
 	private JTable table;
 	private List<Department> list;
+	private JScrollPane scrollPane;
 
 	public void setLists(List<Department> list) {
 		this.list = list;
@@ -25,10 +29,13 @@ public class DepartmentListPanel extends JPanel {
 	private void initComponents() {
 		setLayout(new BorderLayout(0, 0));
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setPreferredScrollableViewportSize(table.getPreferredSize());
+
 		scrollPane.setViewportView(table);
 	}
 
@@ -52,6 +59,17 @@ public class DepartmentListPanel extends JPanel {
 
 	private String[] getColumnNames() {
 		return new String[] { "번호", "부서명", "위치" };
+	}
+
+	public void setPopupMenu(JPopupMenu popupMenu) {
+		scrollPane.setComponentPopupMenu(popupMenu);
+		table.setComponentPopupMenu(popupMenu);
+	}
+	
+	public Department getSelectedDepartment() {
+		int selectedIndex = table.getSelectedRow();
+		String deptNo = (String) table.getValueAt(selectedIndex, 0);
+		return new Department(deptNo);
 	}
 
 }

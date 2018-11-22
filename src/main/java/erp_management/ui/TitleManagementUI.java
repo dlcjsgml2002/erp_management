@@ -1,20 +1,20 @@
 package erp_management.ui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.sql.SQLException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import erp_management.dao.TitleDao;
 import erp_management.dao.TitleDaoImpl;
-
-import java.awt.GridLayout;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 
 public class TitleManagementUI extends JFrame {
 
@@ -22,8 +22,10 @@ public class TitleManagementUI extends JFrame {
 	private JTable table;
 	private JTextField tfTitleNo;
 	private JTextField tfTitleName;
-	private TitleListPanel titleListPanel;
-	private TitleDao titleDao;
+	private TitleListPanel titleListPanel; 
+
+	
+	private TitleDao titleDao;  // 서비스로 변경할 것
 
 	public TitleManagementUI() {
 		titleDao = new TitleDaoImpl();
@@ -66,7 +68,12 @@ public class TitleManagementUI extends JFrame {
 		panel.add(btnCancel);
 
 		titleListPanel = new TitleListPanel();
-		titleListPanel.setList(titleDao.selectTitleByAll());
+		try {
+			titleListPanel.setList(titleDao.selectTitleByAll());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		titleListPanel.loadDatas();
 
 		contentPane.add(titleListPanel, BorderLayout.SOUTH);

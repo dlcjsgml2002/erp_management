@@ -40,7 +40,7 @@ public class TitleDaoTest {
 	}
 
 	@Test
-	public void test01SelectTitleByAll() {
+	public void test01SelectTitleByAll() throws SQLException {
 		List<Title> lists = dao.selectTitleByAll();
 		LogUtil.prnLog(lists.toString());
 		Assert.assertNotNull(lists);

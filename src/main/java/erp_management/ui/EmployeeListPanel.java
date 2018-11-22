@@ -2,15 +2,16 @@ package erp_management.ui;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.ScrollPane;
 import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import erp_management.dao.TitleDao;
 import erp_management.dto.Employee;
-import erp_management.service.OutputService;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
 
 public class EmployeeListPanel extends JPanel {
 	private JTable table;
@@ -58,5 +59,4 @@ public class EmployeeListPanel extends JPanel {
 	private String[] getColumnNames() {
 		return new String[] { "번호", "사원명", "직책", "급여", "성별", "부서", "입사일" };
 	}
-
 }

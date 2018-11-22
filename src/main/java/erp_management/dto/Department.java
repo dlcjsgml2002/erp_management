@@ -6,7 +6,7 @@ public class Department {
 	private int floor;
 
 	public Department() {
-		
+
 	}
 
 	public Department(String deptNo, String deptName, int floor) {
@@ -45,6 +45,6 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return String.format("Department [deptNo=%s, deptName=%s, floor=%s]", deptNo, deptName, floor);
+		return String.format("%s(%s층)", deptName, floor);
 	}
 }

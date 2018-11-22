@@ -14,19 +14,17 @@ import erp_management.jdbc.MySQLJdbcUtil;
 public class TitleDaoImpl implements TitleDao {
 
 	@Override
-	public List<Title> selectTitleByAll() {
+	public List<Title> selectTitleByAll() throws SQLException {
 		List<Title> list = new ArrayList<>();
 		String sql = "select titleno, titlename from title";
 
 		try (Connection conn = MySQLJdbcUtil.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
-			LogUtil.prnLog(pstmt);
+			 LogUtil.prnLog(pstmt);
 			while (rs.next()) {
 				list.add(getTitle(rs));
 			}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
 		}
 
 		return list;

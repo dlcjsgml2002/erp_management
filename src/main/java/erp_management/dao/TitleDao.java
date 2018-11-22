@@ -6,7 +6,7 @@ import java.util.List;
 import erp_management.dto.Title;
 
 public interface TitleDao {
-	List<Title> selectTitleByAll();
+	List<Title> selectTitleByAll() throws SQLException;
 
 	int insertTitle(Title title) throws SQLException;
 

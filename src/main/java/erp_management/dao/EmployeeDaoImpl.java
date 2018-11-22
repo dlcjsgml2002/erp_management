@@ -1,11 +1,11 @@
 package erp_management.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import erp_management.dto.Department;
@@ -58,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			pstmt.setInt(4, emp.getSalary());
 			pstmt.setString(5, emp.getGender());
 			pstmt.setString(6, emp.getDepartment().getDeptNo());
-			pstmt.setDate(7, emp.getDate());
+			pstmt.setDate(7, new java.sql.Date(emp.getDate().getTime()));
 			LogUtil.prnLog(pstmt);
 
 			return pstmt.executeUpdate();
@@ -90,7 +90,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			pstmt.setInt(3, emp.getSalary());
 			pstmt.setString(4, emp.getGender());
 			pstmt.setString(5, emp.getDepartment().getDeptNo());
-			pstmt.setDate(6, emp.getDate());
+			pstmt.setDate(6, new java.sql.Date(emp.getDate().getTime()));
 			LogUtil.prnLog(pstmt);
 
 			return pstmt.executeUpdate();
