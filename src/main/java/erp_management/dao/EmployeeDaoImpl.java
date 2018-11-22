@@ -1,13 +1,16 @@
 package erp_management.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import erp_management.dto.Department;
 import erp_management.dto.Employee;
+import erp_management.dto.Title;
 import erp_management.jdbc.LogUtil;
 import erp_management.jdbc.MySQLJdbcUtil;
 
@@ -16,7 +19,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Employee> selectEmployeeByAll() throws SQLException {
 		LogUtil.prnLog("selectEmployeeByAll()");
-		String sql = "select empno, empname, emptitle, salary, gender, empdept, joindate from employee";
+		String sql = "select empno, empname, emptitle, titlename, salary, gender, empdept, deptname, floor, joindate"
+				+ " from employee as e join title as t on e.emptitle = t.titleno join department as d on e.empdept = d.deptno";
 		List<Employee> list = new ArrayList<>();
 
 		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -31,8 +35,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return list;
 	}
 
-	private Employee getEmployee(ResultSet rs) {
-		return new Employee();
+	private Employee getEmployee(ResultSet rs) throws SQLException {
+		String empNo = rs.getString("empno");
+		String empName = rs.getString("empName");
+		Title title = new Title(rs.getString("emptitle"), rs.getString("titlename"));
+		int salary = rs.getInt("salary");
+		String gender = rs.getString("gender");
+		Department department = new Department(rs.getString("empdept"), rs.getString("deptname"), rs.getInt("floor"));
+		Date date = rs.getDate("joindate");
+		return new Employee(empNo, empName, title, salary, gender, department, date);
 	}
 
 	@Override

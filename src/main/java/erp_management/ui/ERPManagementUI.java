@@ -53,11 +53,16 @@ public class ERPManagementUI extends JFrame implements ActionListener {
 			}
 		}
 		if (e.getSource() == btnEmp) {
-			do_btnEmp_actionPerformed(e);
+			try {
+				do_btnEmp_actionPerformed(e);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
-	protected void do_btnEmp_actionPerformed(ActionEvent e) {
-		
+	protected void do_btnEmp_actionPerformed(ActionEvent e) throws SQLException {
+		EmployeeManagementUI employeeManagementUI = new EmployeeManagementUI();
+		employeeManagementUI.setVisible(true);
 	}
 	protected void do_btnDept_actionPerformed(ActionEvent e) throws SQLException {
 		DepartmentManagementUI departmentManagementUI = new DepartmentManagementUI();

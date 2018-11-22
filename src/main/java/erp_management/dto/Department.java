@@ -6,7 +6,7 @@ public class Department {
 	private int floor;
 
 	public Department() {
-
+		
 	}
 
 	public Department(String deptNo, String deptName, int floor) {

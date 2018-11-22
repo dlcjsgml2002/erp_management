@@ -66,7 +66,7 @@ public class EmployeeDaoTest {
 		}
 	}
 
-/*	@Test
+	@Test
 	public void test05DeleteEmployee() {
 		try {
 			Employee deEmp = new Employee("E017010");
@@ -80,7 +80,7 @@ public class EmployeeDaoTest {
 				LogUtil.prnLog(e);
 			}
 		}
-	}*/
+	}
 
 	@Test
 	public void test03UpdateEmployee() throws SQLException {

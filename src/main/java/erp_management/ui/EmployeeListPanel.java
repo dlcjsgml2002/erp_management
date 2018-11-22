@@ -8,13 +8,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import erp_management.dao.TitleDao;
 import erp_management.dto.Employee;
+import erp_management.service.OutputService;
 
 public class EmployeeListPanel extends JPanel {
 	private JTable table;
 	private List<Employee> list;
 
+	public void setLists(List<Employee> list) {
+		this.list = list;
+	}
+
 	public EmployeeListPanel() {
+		initComponents();
+	}
+
+	private void initComponents() {
 		setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -22,7 +32,6 @@ public class EmployeeListPanel extends JPanel {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-
 	}
 
 	public void loadDatas() {
@@ -40,13 +49,14 @@ public class EmployeeListPanel extends JPanel {
 	}
 
 	private Object[] getTitleRow(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Object[] { employee.getEmpNo(), employee.getEmpName(), employee.getTitle().getTitleName(),
+				employee.getSalary(), employee.getGender(),
+				String.format("%s(%s)", employee.getDepartment().getDeptName(), employee.getDepartment().getFloor()),
+				employee.getDate() };
 	}
 
 	private String[] getColumnNames() {
-		return new String[] { "New column", "New column", "New column", "New column", "New column", "New column",
-				"New column" };
+		return new String[] { "번호", "사원명", "직책", "급여", "성별", "부서", "입사일" };
 	}
 
 }
