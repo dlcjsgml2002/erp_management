@@ -65,7 +65,7 @@ public class DepartmentDaoTest {
 	@Test
 	public void test05DeleteDepartment() {
 		try {
-			Department delDept = new Department();
+			Department delDept = new Department("D006");
 			delDept.setDeptNo("D006");
 			int rowAffected = dao.deleteDepartment(delDept);
 			LogUtil.prnLog(String.format("rowAffected %d", rowAffected));

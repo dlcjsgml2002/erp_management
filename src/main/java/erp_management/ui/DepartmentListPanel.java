@@ -65,11 +65,13 @@ public class DepartmentListPanel extends JPanel {
 		scrollPane.setComponentPopupMenu(popupMenu);
 		table.setComponentPopupMenu(popupMenu);
 	}
-	
+
 	public Department getSelectedDepartment() {
 		int selectedIndex = table.getSelectedRow();
 		String deptNo = (String) table.getValueAt(selectedIndex, 0);
-		return new Department(deptNo);
+		String deptName = (String) table.getValueAt(selectedIndex, 1);
+		int floor = (int) table.getValueAt(selectedIndex, 2);
+		return new Department(deptNo, deptName, floor);
 	}
 
 }

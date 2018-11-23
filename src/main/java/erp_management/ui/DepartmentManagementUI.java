@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import erp_management.dto.Department;
 import erp_management.service.DepartmentUIService;
 
@@ -23,9 +25,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class DepartmentManagementUI extends JFrame implements ActionListener {
-	private static final String ADD = "추가";
-	private static final String UPDATE = "수정";
-	private static final String DELETE = "삭제";
 
 	private JPanel contentPane;
 	private JTextField tfDeptNo;
@@ -100,11 +99,11 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 	private JPopupMenu getPopupMenu() {
 		JPopupMenu popupMenu = new JPopupMenu();
 
-		JMenuItem mntmUpdate = new JMenuItem(UPDATE);
+		JMenuItem mntmUpdate = new JMenuItem("수정");
 		mntmUpdate.addActionListener(this);
 		popupMenu.add(mntmUpdate);
 
-		JMenuItem mntmDelete = new JMenuItem(DELETE);
+		JMenuItem mntmDelete = new JMenuItem("삭제");
 		mntmDelete.addActionListener(this);
 		popupMenu.add(mntmDelete);
 
@@ -113,36 +112,91 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == DELETE) {
+		if (e.getActionCommand().equals("삭제")) {
 			do_mntmDelete_actionPerformed(e);
 		}
-		if (e.getSource() == btnCancel) {
+		if (e.getActionCommand().equals("수정")) {
+			if (e.getSource() == btnOk) {
+				do_btnUpdate_actionPerfromed(e);
+			} else {
+				do_mntmUpdate_actionPerformed(e);
+			}
+		}
+		if (e.getActionCommand().equals("취소")) {
 			do_btnCancel_actionPerformed(e);
 		}
-		if (e.getSource() == btnOk) {
+		if (e.getActionCommand().equals("추가")) {
 			do_btnOk_actionPerformed(e);
 		}
 	}
 
-	protected void do_mntmDelete_actionPerformed(ActionEvent e) {
+	// 수정
+	private void do_btnUpdate_actionPerfromed(ActionEvent e) {
+		Department selDept = getDepartment();
+		int res = 0;
+
 		try {
-			Department selectedDept = deptListPanel.getSelectedDepartment();
-			Department searchDept = service.;
-			service.deleteDepartment(selectedDept);
+			res = service.updateDepartment(selDept);
 			deptListPanel.setLists(service.selectDepartmentByAll());
 			deptListPanel.loadDatas();
-		} catch(Exception e1) {
-			if (deptListPanel.size() == null) {
-				JOptionPane.showMessageDialog(null, "학생 정보가 없습니다.");
-				return;
+			if (res == 1) {
+				JOptionPane.showMessageDialog(null, "수정되었습니다.");
 			}
-			JOptionPane.showMessageDialog(null, "삭제하고자");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		btnOk.setText("추가");
+	}
+
+	// 수정 모드로 변경
+	private void do_mntmUpdate_actionPerformed(ActionEvent e) {
+		Department selDept = deptListPanel.getSelectedDepartment();
+		setDepartment(selDept);
+		try {
+			deptListPanel.setLists(service.selectDepartmentByAll());
+			deptListPanel.loadDatas();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		btnOk.setText("수정");
+	}
+
+	// 값 받아서 입력창에 넣기
+	private void setDepartment(Department dept) {
+		tfDeptNo.setText(dept.getDeptNo());
+		tfDeptName.setText(dept.getDeptName());
+		tfFloor.setText(dept.getFloor() + "");
+	}
+
+	// 삭제
+	protected void do_mntmDelete_actionPerformed(ActionEvent e) {
+		Department selDept = deptListPanel.getSelectedDepartment();
+		int res = 0;
+
+		try {
+			res = service.deleteDepartment(selDept);
+			deptListPanel.setLists(service.selectDepartmentByAll());
+			deptListPanel.loadDatas();
+			if (res == 1) {
+				JOptionPane.showMessageDialog(null, "삭제되었습니다.");
+			}
+		} catch (MySQLIntegrityConstraintViolationException e1) {
+			if (e1.getErrorCode() == 1451) {
+				JOptionPane.showMessageDialog(null, "해당 부서에 소속된 사원이 존재합니다.");
+			} else {
+				e1.printStackTrace();
+			}
+			/* JOptionPane.showMessageDialog(null, String.format("%s, %s",e1.getErrorCode(), e1.getMessage())); */
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 	}
 
+	// 추가 버튼 눌렀을때
 	protected void do_btnOk_actionPerformed(ActionEvent e) {
 		Department dept = getDepartment();
 		int res = 0;
+
 		try {
 			res = service.insertDepartment(dept);
 			deptListPanel.setLists(service.selectDepartmentByAll());
@@ -163,6 +217,6 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 	}
 
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {
-
+		dispose();
 	}
 }
