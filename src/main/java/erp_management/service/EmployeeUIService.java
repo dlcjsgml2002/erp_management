@@ -39,4 +39,12 @@ public class EmployeeUIService {
 	public int insertEmployee(Employee emp) throws SQLException {
 		return empDao.insertEmployee(emp);
 	}
+	
+	public int deleteEmployee(Employee emp) throws SQLException {
+		return empDao.deleteEmployee(emp);
+	}
+	
+	public int updateEmployee(Employee emp) throws SQLException {
+		return empDao.updateEmployee(emp);
+	}
 }

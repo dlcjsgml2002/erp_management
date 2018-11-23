@@ -165,6 +165,8 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 	private void setDepartment(Department dept) {
 		tfDeptNo.setText(dept.getDeptNo());
 		tfDeptName.setText(dept.getDeptName());
+		
+		
 		tfFloor.setText(dept.getFloor() + "");
 	}
 
@@ -186,7 +188,7 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 			} else {
 				e1.printStackTrace();
 			}
-			/* JOptionPane.showMessageDialog(null, String.format("%s, %s",e1.getErrorCode(), e1.getMessage())); */
+			/* JOptionPane.showMessageDialog(null, String.format("%s, %s",e1.getErrorCode(), e1.getMessage())); 에러코드를 찾아주는 마법의 코드*/
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}

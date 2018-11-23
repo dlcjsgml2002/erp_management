@@ -8,13 +8,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -27,12 +30,15 @@ import erp_management.dto.Department;
 import erp_management.dto.Employee;
 import erp_management.dto.Title;
 import erp_management.service.EmployeeUIService;
+import javafx.scene.control.RadioButton;
+
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class EmployeeManagementUI extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JTextField tfEmpNo;
 	private JTextField tfEmpName;
-	private JTextField tfSalary;
 	private JTextField tfJoinDate;
 	private EmployeeUIService service;
 	private EmployeeListPanel empList;
@@ -43,15 +49,16 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 	private JRadioButton rdbtnMale;
 	private JComboBox<Department> cbEmpDept;
 	private JButton btnCancel;
+	private JSpinner spSalary;
 
 	public EmployeeManagementUI() throws SQLException {
 		service = new EmployeeUIService();
 		initComponents();
-		getTitleList();
-		getDepartmentList();
+/*		getTitleList();
+		getDepartmentList();*/
 	}
 
-	private void getDepartmentList() throws SQLException {
+/*	private void getDepartmentList() throws SQLException {
 		List<Department> list = service.selectDepartmentByAll();
 		for (Department d : list) {
 			cbEmpDept.addItem(d);
@@ -63,7 +70,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		for (Title t : list) {
 			cbEmpTitle.addItem(t);
 		}
-	}
+	}*/
 
 	private void initComponents() throws SQLException {
 		setTitle("사원 관리");
@@ -95,15 +102,16 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		JLabel lblEmpTitle = new JLabel("직책");
 		panel.add(lblEmpTitle);
 
-		cbEmpTitle = new JComboBox<>();
+		DefaultComboBoxModel<Title> titleModel = new DefaultComboBoxModel<>(new Vector<>(service.selectTitleByAll()));
+		cbEmpTitle = new JComboBox<>(titleModel);
 		panel.add(cbEmpTitle);
 
 		JLabel lblSalary = new JLabel("급여");
 		panel.add(lblSalary);
 
-		tfSalary = new JTextField();
-		tfSalary.setColumns(10);
-		panel.add(tfSalary);
+		spSalary = new JSpinner();
+		spSalary.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
+		panel.add(spSalary);
 
 		JLabel lblGender = new JLabel("성별");
 		panel.add(lblGender);
@@ -126,7 +134,8 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		JLabel lblEmpDept = new JLabel("부서");
 		panel.add(lblEmpDept);
 
-		cbEmpDept = new JComboBox<>();
+		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(new Vector<>(service.selectDepartmentByAll()));
+		cbEmpDept = new JComboBox<>(deptModel);
 		panel.add(cbEmpDept);
 
 		JLabel lblJoinDate = new JLabel("입사일");
@@ -149,15 +158,98 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		empList.setLists(service.selectEmployeeByAll());
 		empList.loadDatas();
 
+		empList.setPopupMenu(getPopupMenu());
+
 		contentPane.add(empList);
 	}
 
+	private JPopupMenu getPopupMenu() {
+		JPopupMenu popupMenu = new JPopupMenu();
+
+		JMenuItem mntmUpdate = new JMenuItem("수정");
+		mntmUpdate.addActionListener(this);
+		popupMenu.add(mntmUpdate);
+
+		JMenuItem mntmDelete = new JMenuItem("삭제");
+		mntmDelete.addActionListener(this);
+		popupMenu.add(mntmDelete);
+
+		return popupMenu;
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnCancel) {
+		if (e.getActionCommand().equals("삭제")) {
+			do_mntmDelete_actionPerformed(e);
+		}
+		if (e.getActionCommand().equals("수정")) {
+			if (e.getSource() == btnOk) {
+				do_btnUpdate_actionPerfromed(e);
+			} else {
+				do_mntmUpdate_actionPerformed(e);
+			}
+		}
+		if (e.getActionCommand().equals("취소")) {
 			do_btnCancel_actionPerformed(e);
 		}
-		if (e.getSource() == btnOk) {
+		if (e.getActionCommand().equals("추가")) {
 			do_btnOk_actionPerformed(e);
+		}
+	}
+
+	private void do_mntmUpdate_actionPerformed(ActionEvent e) {
+		Employee emp = empList.getSelectedEmployee();
+		setEmployee(emp);
+		
+		btnOk.setText("수정");
+	}
+
+	private void setEmployee(Employee emp) {
+		
+		tfEmpNo.setText(emp.getEmpNo());
+		tfEmpName.setText(emp.getEmpName());
+		cbEmpTitle.setSelectedItem(emp.getTitle());
+		spSalary.setValue(emp.getSalary());
+		/*buttonGroup.setSelected(RadioButton, true);*/
+		if (emp.getGender().equals("남자")) {
+			rdbtnMale.setSelected(true);
+		} else {
+			rdbtnFemale.setSelected(true);
+		}
+		cbEmpDept.setSelectedItem(emp.getDepartment());
+		tfJoinDate.setText(emp.getDate()+"");
+	}
+
+	private void do_btnUpdate_actionPerfromed(ActionEvent e) {
+		Employee emp = getEmployee();
+		int res = 0;
+		
+		try {
+			res = service.updateEmployee(emp);
+			empList.setLists(service.selectEmployeeByAll());
+			empList.loadDatas();
+			if (res == 1) {
+				JOptionPane.showMessageDialog(null, "수정되었습니다.");
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		btnOk.setText("추가");
+	}
+
+	private void do_mntmDelete_actionPerformed(ActionEvent e) {
+		Employee emp = empList.getSelectedEmployee();
+		int res = 0;
+
+		try {
+			res = service.deleteEmployee(emp);
+			empList.setLists(service.selectEmployeeByAll());
+			empList.loadDatas();
+			if (res == 1) {
+				JOptionPane.showMessageDialog(null, "삭제되었습니다.");
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 	}
 
@@ -181,7 +273,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		String empNo = tfEmpNo.getText().trim();
 		String empName = tfEmpName.getText().trim();
 		Title title = (Title) cbEmpTitle.getSelectedItem();
-		int salary = Integer.parseInt(tfSalary.getText().trim());
+		int salary = (int) spSalary.getValue();
 		String gender = null;
 		if (rdbtnMale.isSelected()) {
 			gender = "남자";
@@ -200,6 +292,6 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 	}
 
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {
-
+		dispose();
 	}
 }
