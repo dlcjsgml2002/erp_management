@@ -90,17 +90,4 @@ public class TitleDaoTest {
 			LogUtil.prnLog(e);
 		}
 	}
-
-	@Test
-	public void test04SelectTitleByNo() {
-		try {
-			Title selTitle = new Title();
-			selTitle.setTitleNo("T006");
-			Title title = dao.selectTitleByNo(selTitle);
-			LogUtil.prnLog(String.format("%s - %s", title.getClass().getSimpleName(), title));
-			Assert.assertNotNull(title);
-		} catch (SQLException e) {
-			LogUtil.prnLog(e);
-		}
-	}
 }

@@ -29,4 +29,8 @@ public class TitleUIService {
 	public int updateTitle(Title title) throws SQLException {
 		return titledao.updateTitle(title);
 	}
+	
+	public String nextTitleNo() throws SQLException {
+		return titledao.nextTitleNo();
+	}
 }

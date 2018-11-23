@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 import erp_management.dto.Department;
 import erp_management.dto.Employee;
 import erp_management.dto.Title;
+import erp_management.jdbc.ConnectionProvider;
 import erp_management.jdbc.LogUtil;
 import erp_management.jdbc.MySQLJdbcUtil;
 
@@ -98,22 +100,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public Employee selectEmployeeByNo(Employee emp) throws SQLException {
-		LogUtil.prnLog("selectEmployeeByNo()");
-		String sql = "select empno, empname, emptitle, salary, gender, empdept, joindate from employee where empno = ?";
-		Employee employee = null;
-
-		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, emp.getEmpNo());
+	public String nextEmployeeNo() {
+		String currentDate = LocalDate.now().getYear() + "";
+		String sql = "select max(empno) as nextno from employee";
+		String nextStr = null;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
 			LogUtil.prnLog(pstmt);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					employee = getEmployee(rs);
-				}
+			if(rs.next()) {
+				nextStr = String.format("E%3s%03d", (String) currentDate.substring(1), Integer.parseInt(rs.getString("nextno").substring(4)) + 1);
 			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
-
-		return employee;
+		return nextStr;
 	}
-
 }

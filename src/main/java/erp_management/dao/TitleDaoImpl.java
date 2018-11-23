@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import erp_management.dto.Title;
+import erp_management.jdbc.ConnectionProvider;
 import erp_management.jdbc.LogUtil;
 import erp_management.jdbc.MySQLJdbcUtil;
 
@@ -21,7 +22,7 @@ public class TitleDaoImpl implements TitleDao {
 		try (Connection conn = MySQLJdbcUtil.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
-			 LogUtil.prnLog(pstmt);
+			LogUtil.prnLog(pstmt);
 			while (rs.next()) {
 				list.add(getTitle(rs));
 			}
@@ -85,22 +86,20 @@ public class TitleDaoImpl implements TitleDao {
 	}
 
 	@Override
-	public Title selectTitleByNo(Title title) throws SQLException {
-		LogUtil.prnLog("selectTitleByNo()");
-		Title tit = null;
-		String sql = "Select titleno, titlename from title where titleno = ?";
-
-		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, title.getTitleNo());
+	public String nextTitleNo() throws SQLException {
+		String sql = "select max(titleno) as nextno from title";
+		String nextStr = null;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
 			LogUtil.prnLog(pstmt);
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					tit = getTitle(rs);
-				}
+			if(rs.next()) {
+				nextStr = String.format("T%03d", Integer.parseInt(rs.getString("nextno").substring(1)) + 1);
 			}
+		} catch(SQLException e1) {
+			e1.printStackTrace();
 		}
-		return tit;
+		return nextStr;
 	}
 
 }

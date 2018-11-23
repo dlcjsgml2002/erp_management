@@ -14,5 +14,5 @@ public interface DepartmentDao {
 
 	int updateDepartment(Department department) throws SQLException;
 
-	Department selectDepartmentByNo(Department department) throws SQLException;
+	String nextDeptNo() throws SQLException;
 }

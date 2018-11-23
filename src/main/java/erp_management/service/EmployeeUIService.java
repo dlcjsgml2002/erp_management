@@ -47,4 +47,8 @@ public class EmployeeUIService {
 	public int updateEmployee(Employee emp) throws SQLException {
 		return empDao.updateEmployee(emp);
 	}
+	
+	public String nextEmployeeNo() throws SQLException {
+		return empDao.nextEmployeeNo();
+	}
 }

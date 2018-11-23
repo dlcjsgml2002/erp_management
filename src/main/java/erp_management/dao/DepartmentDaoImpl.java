@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.Result;
+
 import erp_management.dto.Department;
+import erp_management.jdbc.ConnectionProvider;
 import erp_management.jdbc.LogUtil;
 import erp_management.jdbc.MySQLJdbcUtil;
 
@@ -89,23 +92,21 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	}
 
 	@Override
-	public Department selectDepartmentByNo(Department department) throws SQLException {
-		LogUtil.prnLog("selectDepartmentByNo()");
-		Department dept = null;
-		String sql = "select deptno, deptname, floor from department where deptno = ?";
-
-		try (Connection conn = MySQLJdbcUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, department.getDeptNo());
+	public String nextDeptNo() throws SQLException {
+		String sql = "select max(deptno) as nextno from department";
+		String nextStr = null;
+		
+		try (Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
 			LogUtil.prnLog(pstmt);
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					dept = getDepartment(rs);
-				}
+			if(rs.next()) {
+				nextStr = String.format("D%03d", Integer.parseInt(rs.getString("nextno").substring(1)) + 1);
 			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
-
-		return dept;
+		
+		return nextStr;
 	}
-
 }

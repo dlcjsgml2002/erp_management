@@ -90,17 +90,4 @@ public class DepartmentDaoTest {
 			LogUtil.prnLog(e);
 		}
 	}
-
-	@Test
-	public void test04SelectDepartmentByNo() {
-		try {
-			Department selDept = new Department();
-			selDept.setDeptNo("D006");
-			Department department = dao.selectDepartmentByNo(selDept);
-			LogUtil.prnLog(String.format("%s - %s", department.getClass().getSimpleName(), department));
-			Assert.assertNotNull(department);
-		} catch (SQLException e) {
-			LogUtil.prnLog(e);
-		}
-	}
 }

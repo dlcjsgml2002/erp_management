@@ -29,8 +29,8 @@ public class DepartmentUIService {
 	public int updateDepartment(Department dept) throws SQLException {
 		return deptDao.updateDepartment(dept);
 	}
-
-	public Department selectedDepartmentByNo(Department dept) throws SQLException {
-		return deptDao.selectDepartmentByNo(dept);
+	
+	public String nextDeptNo() throws SQLException {
+		return deptDao.nextDeptNo();
 	}
 }

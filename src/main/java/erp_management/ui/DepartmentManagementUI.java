@@ -60,6 +60,12 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 		panel.add(lblDeptNo);
 
 		tfDeptNo = new JTextField();
+		tfDeptNo.setEnabled(false);
+		try {
+			tfDeptNo.setText(service.nextDeptNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		panel.add(tfDeptNo);
 		tfDeptNo.setColumns(10);
 
@@ -142,6 +148,7 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "수정되었습니다.");
 			}
+			clearTf();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -165,8 +172,7 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 	private void setDepartment(Department dept) {
 		tfDeptNo.setText(dept.getDeptNo());
 		tfDeptName.setText(dept.getDeptName());
-		
-		
+
 		tfFloor.setText(dept.getFloor() + "");
 	}
 
@@ -188,7 +194,10 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 			} else {
 				e1.printStackTrace();
 			}
-			/* JOptionPane.showMessageDialog(null, String.format("%s, %s",e1.getErrorCode(), e1.getMessage())); 에러코드를 찾아주는 마법의 코드*/
+			/*
+			 * JOptionPane.showMessageDialog(null, String.format("%s, %s",e1.getErrorCode(),
+			 * e1.getMessage())); 에러코드를 찾아주는 마법의 코드
+			 */
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -206,9 +215,20 @@ public class DepartmentManagementUI extends JFrame implements ActionListener {
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "추가되었습니다.");
 			}
+			clearTf();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	private void clearTf() {
+		try {
+			tfDeptNo.setText(service.nextDeptNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		tfDeptName.setText("");
+		tfFloor.setText("");
 	}
 
 	private Department getDepartment() {

@@ -59,6 +59,12 @@ public class TitleManagementUI extends JFrame implements ActionListener {
 		panel.add(lblTitleNo);
 
 		tfTitleNo = new JTextField();
+		tfTitleNo.setEnabled(false);
+		try {
+			tfTitleNo.setText(service.nextTitleNo());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		panel.add(tfTitleNo);
 		tfTitleNo.setColumns(10);
 
@@ -131,6 +137,7 @@ public class TitleManagementUI extends JFrame implements ActionListener {
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "수정되었습니다.");
 			}
+			clearTf();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -187,9 +194,19 @@ public class TitleManagementUI extends JFrame implements ActionListener {
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "추가되었습니다.");
 			}
+			clearTf();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	private void clearTf() {
+		try {
+			tfTitleNo.setText(service.nextTitleNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		tfTitleName.setText("");
 	}
 
 	private Title getTitleByAll() {

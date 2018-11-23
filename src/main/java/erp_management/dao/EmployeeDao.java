@@ -13,6 +13,6 @@ public interface EmployeeDao {
 	int deleteEmployee(Employee emp) throws SQLException;
 
 	int updateEmployee(Employee emp) throws SQLException;
-
-	Employee selectEmployeeByNo(Employee emp) throws SQLException;
+	
+	String nextEmployeeNo();
 }

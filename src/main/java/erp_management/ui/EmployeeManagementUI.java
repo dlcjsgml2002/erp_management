@@ -89,6 +89,12 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		panel.add(lblEmpNo);
 
 		tfEmpNo = new JTextField();
+		tfEmpNo.setEnabled(false);
+		try {
+			tfEmpNo.setText(service.nextEmployeeNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		tfEmpNo.setColumns(10);
 		panel.add(tfEmpNo);
 
