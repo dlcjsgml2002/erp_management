@@ -54,23 +54,19 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 	public EmployeeManagementUI() throws SQLException {
 		service = new EmployeeUIService();
 		initComponents();
-/*		getTitleList();
-		getDepartmentList();*/
+		/*
+		 * getTitleList(); getDepartmentList();
+		 */
 	}
 
-/*	private void getDepartmentList() throws SQLException {
-		List<Department> list = service.selectDepartmentByAll();
-		for (Department d : list) {
-			cbEmpDept.addItem(d);
-		}
-	}
-
-	private void getTitleList() throws SQLException {
-		List<Title> list = service.selectTitleByAll();
-		for (Title t : list) {
-			cbEmpTitle.addItem(t);
-		}
-	}*/
+	/*
+	 * private void getDepartmentList() throws SQLException { List<Department> list
+	 * = service.selectDepartmentByAll(); for (Department d : list) {
+	 * cbEmpDept.addItem(d); } }
+	 * 
+	 * private void getTitleList() throws SQLException { List<Title> list =
+	 * service.selectTitleByAll(); for (Title t : list) { cbEmpTitle.addItem(t); } }
+	 */
 
 	private void initComponents() throws SQLException {
 		setTitle("사원 관리");
@@ -140,7 +136,8 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		JLabel lblEmpDept = new JLabel("부서");
 		panel.add(lblEmpDept);
 
-		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(new Vector<>(service.selectDepartmentByAll()));
+		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(
+				new Vector<>(service.selectDepartmentByAll()));
 		cbEmpDept = new JComboBox<>(deptModel);
 		panel.add(cbEmpDept);
 
@@ -206,30 +203,30 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 	private void do_mntmUpdate_actionPerformed(ActionEvent e) {
 		Employee emp = empList.getSelectedEmployee();
 		setEmployee(emp);
-		
+
 		btnOk.setText("수정");
 	}
 
 	private void setEmployee(Employee emp) {
-		
+
 		tfEmpNo.setText(emp.getEmpNo());
 		tfEmpName.setText(emp.getEmpName());
 		cbEmpTitle.setSelectedItem(emp.getTitle());
 		spSalary.setValue(emp.getSalary());
-		/*buttonGroup.setSelected(RadioButton, true);*/
+		/* buttonGroup.setSelected(RadioButton, true); */
 		if (emp.getGender().equals("남자")) {
 			rdbtnMale.setSelected(true);
 		} else {
 			rdbtnFemale.setSelected(true);
 		}
 		cbEmpDept.setSelectedItem(emp.getDepartment());
-		tfJoinDate.setText(emp.getDate()+"");
+		tfJoinDate.setText(emp.getDate() + "");
 	}
 
 	private void do_btnUpdate_actionPerfromed(ActionEvent e) {
 		Employee emp = getEmployee();
 		int res = 0;
-		
+
 		try {
 			res = service.updateEmployee(emp);
 			empList.setLists(service.selectEmployeeByAll());
@@ -237,6 +234,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "수정되었습니다.");
 			}
+			clearTf();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -270,9 +268,25 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "추가되었습니다.");
 			}
+			clearTf();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	private void clearTf() {
+		try {
+			tfEmpNo.setText(service.nextEmployeeNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		tfEmpName.setText("");
+		cbEmpTitle.setSelectedIndex(-1);
+		spSalary.setValue(1500000);
+		rdbtnMale.setSelected(true);
+		cbEmpDept.setSelectedIndex(-1);
+		tfJoinDate.setText(String.format("%tF", new Date()));
+		tfEmpName.requestFocus();
 	}
 
 	private Employee getEmployee() {
