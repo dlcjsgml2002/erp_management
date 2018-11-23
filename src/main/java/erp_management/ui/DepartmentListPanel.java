@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import erp_management.dto.Department;
 
 import java.awt.BorderLayout;
-import java.awt.ScrollPane;
 import java.util.List;
 
 public class DepartmentListPanel extends JPanel {

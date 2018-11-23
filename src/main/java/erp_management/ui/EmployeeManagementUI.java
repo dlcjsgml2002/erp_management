@@ -29,9 +29,6 @@ import erp_management.dto.Title;
 import erp_management.service.EmployeeUIService;
 
 public class EmployeeManagementUI extends JFrame implements ActionListener {
-	public static final String UPDATE = "수정";
-	public static final String DEL = "삭제";
-
 	private JPanel contentPane;
 	private JTextField tfEmpNo;
 	private JTextField tfEmpName;

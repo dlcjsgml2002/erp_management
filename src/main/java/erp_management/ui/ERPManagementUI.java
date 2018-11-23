@@ -44,7 +44,11 @@ public class ERPManagementUI extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnTitle) {
-			do_btnTitle_actionPerformed(e);
+			try {
+				do_btnTitle_actionPerformed(e);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		if (e.getSource() == btnDept) {
 			try {
@@ -72,7 +76,7 @@ public class ERPManagementUI extends JFrame implements ActionListener {
 		departmentManagementUI.setVisible(true);
 	}
 
-	protected void do_btnTitle_actionPerformed(ActionEvent e) {
+	protected void do_btnTitle_actionPerformed(ActionEvent e) throws SQLException {
 		TitleManagementUI titleManagementUI = new TitleManagementUI();
 		titleManagementUI.setVisible(true);
 	}

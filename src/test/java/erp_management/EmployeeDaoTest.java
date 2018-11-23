@@ -91,11 +91,4 @@ public class EmployeeDaoTest {
 		Assert.assertEquals(1, rowAffected);
 	}
 
-	@Test
-	public void test04SelectEmployeeByNo() throws SQLException {
-		Employee selEmp = dao.selectEmployeeByNo(new Employee("E017010"));
-		LogUtil.prnLog(selEmp.toString());
-		Assert.assertNotNull(selEmp);
-	}
-
 }
