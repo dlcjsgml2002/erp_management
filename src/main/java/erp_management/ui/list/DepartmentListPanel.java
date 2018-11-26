@@ -1,4 +1,4 @@
-package erp_management.ui;
+package erp_management.ui.list;
 
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;

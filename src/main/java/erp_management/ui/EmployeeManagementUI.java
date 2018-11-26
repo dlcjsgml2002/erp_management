@@ -30,6 +30,7 @@ import erp_management.dto.Department;
 import erp_management.dto.Employee;
 import erp_management.dto.Title;
 import erp_management.service.EmployeeUIService;
+import erp_management.ui.list.EmployeeListPanel;
 import javafx.scene.control.RadioButton;
 
 import javax.swing.JSpinner;
@@ -71,7 +72,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 	private void initComponents() throws SQLException {
 		setTitle("사원 관리");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 441);
+		setBounds(100, 100, 450, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -82,6 +83,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		panel.setLayout(new GridLayout(0, 2, 10, 10));
 
 		JLabel lblEmpNo = new JLabel("번호");
+		lblEmpNo.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblEmpNo);
 
 		tfEmpNo = new JTextField();
@@ -95,6 +97,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		panel.add(tfEmpNo);
 
 		JLabel lblEmpName = new JLabel("사원명");
+		lblEmpName.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblEmpName);
 
 		tfEmpName = new JTextField();
@@ -102,6 +105,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		panel.add(tfEmpName);
 
 		JLabel lblEmpTitle = new JLabel("직책");
+		lblEmpTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblEmpTitle);
 
 		DefaultComboBoxModel<Title> titleModel = new DefaultComboBoxModel<>(new Vector<>(service.selectTitleByAll()));
@@ -109,6 +113,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		panel.add(cbEmpTitle);
 
 		JLabel lblSalary = new JLabel("급여");
+		lblSalary.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblSalary);
 
 		spSalary = new JSpinner();
@@ -116,6 +121,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		panel.add(spSalary);
 
 		JLabel lblGender = new JLabel("성별");
+		lblGender.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblGender);
 
 		JPanel pGender = new JPanel();
@@ -134,6 +140,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		pGender.add(rdbtnFemale);
 
 		JLabel lblEmpDept = new JLabel("부서");
+		lblEmpDept.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblEmpDept);
 
 		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(
@@ -142,6 +149,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 		panel.add(cbEmpDept);
 
 		JLabel lblJoinDate = new JLabel("입사일");
+		lblJoinDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblJoinDate);
 
 		tfJoinDate = new JTextField();
@@ -273,7 +281,7 @@ public class EmployeeManagementUI extends JFrame implements ActionListener {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	private void clearTf() {
 		try {
 			tfEmpNo.setText(service.nextEmployeeNo());

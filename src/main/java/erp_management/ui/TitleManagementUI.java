@@ -22,6 +22,8 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 
 import erp_management.dto.Title;
 import erp_management.service.TitleUIService;
+import erp_management.ui.list.TitleListPanel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -43,11 +45,11 @@ public class TitleManagementUI extends JFrame implements ActionListener {
 	private void initComponents() throws SQLException {
 		setTitle("직책 관리");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 618);
+		setBounds(100, 100, 350, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(450, 300));

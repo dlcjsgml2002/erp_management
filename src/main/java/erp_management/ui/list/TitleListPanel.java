@@ -1,4 +1,4 @@
-package erp_management.ui;
+package erp_management.ui.list;
 
 import java.awt.BorderLayout;
 import java.util.List;
